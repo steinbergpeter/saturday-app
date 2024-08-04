@@ -22,7 +22,8 @@ async function DELETE(req: NextRequest) {
   try {
     const userId = req.nextUrl.pathname.split("/").pop();
     if (!userId) throw new Error("User ID is required");
-    const deletedUser = prisma.user.delete({ where: { id: userId } });
+    console.log("/api/users/[userId]/route.ts/DELETE called id: ", userId);
+    const deletedUser = await prisma.user.delete({ where: { id: userId } });
     return NextResponse.json(deletedUser, { status: 200 });
   } catch (error) {
     console.error(error);

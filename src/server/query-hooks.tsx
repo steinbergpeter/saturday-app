@@ -34,7 +34,10 @@ const useCreateUser = (): UseMutationResult<User, Error, NewUser> => {
 const useDeleteUser = (id: string): UseMutationResult<User, Error, string> => {
   const queryClient = useQueryClient();
   return useMutation<User, Error, string>({
-    mutationFn: async () => deleteUser(id),
+    mutationFn: async () => {
+      console.log("deleteUser hook Mutation called with id: ", id);
+      return deleteUser(id);
+    },
     onError: (error) => console.error(error),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user", id] });
@@ -43,4 +46,4 @@ const useDeleteUser = (id: string): UseMutationResult<User, Error, string> => {
   });
 };
 
-export { useGetUsers, useCreateUser, useGetUserWithPosts };
+export { useGetUsers, useCreateUser, useGetUserWithPosts, useDeleteUser };

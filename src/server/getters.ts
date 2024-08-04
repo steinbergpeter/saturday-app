@@ -27,6 +27,7 @@ async function getUserWithPosts(id: string) {
 }
 
 async function deleteUser(id: string) {
+  console.log("deleteUser called with id: ", id);
   try {
     const response = await fetch(`http://localhost:3000/api/users/${id}`, {
       method: "DELETE",

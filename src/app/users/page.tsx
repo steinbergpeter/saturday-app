@@ -1,5 +1,5 @@
-import CreateUser from "@/components/create-user";
-import UserList from "@/components/user-list";
+import CreateUser from "./_components/create-user";
+import UserList from "./_components/user-list";
 
 function UserPage() {
   return (
