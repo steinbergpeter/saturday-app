@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateUser } from "@/server/query-hooks";
+import { useCreateUser } from "@/server/mutation-hooks";
 import { useRef, type FormEvent } from "react";
 
 const CreateUser = () => {

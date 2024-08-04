@@ -29,14 +29,17 @@ type User = z.infer<typeof userSchema>;
 type UserWithPosts = z.infer<typeof userWithPostsSchema>;
 type NewUser = z.infer<typeof newUserSchema>;
 type UserArray = z.infer<typeof userArraySchema>;
+type Post = z.infer<typeof postSchema>;
 
 export {
   userSchema,
   userWithPostsSchema,
   newUserSchema,
   userArraySchema,
+  postSchema,
   type User,
   type UserWithPosts,
   type NewUser,
   type UserArray,
+  type Post,
 };

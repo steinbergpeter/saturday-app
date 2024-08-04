@@ -1,17 +1,17 @@
 "use client";
 
-import { useDeleteUser } from "@/server/query-hooks";
+import { useDeleteUser } from "@/server/mutation-hooks";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  id: string;
+  userId: string;
 };
 
-const DeleteUserBtn = ({ id }: Props) => {
+const DeleteUserBtn = ({ userId }: Props) => {
   const router = useRouter();
-  const { mutate: deleteUser, isPending } = useDeleteUser(id);
+  const { mutate: deleteUser, isPending } = useDeleteUser(userId);
   const handleDelete = () => {
-    deleteUser(id);
+    deleteUser(userId);
     router.push("/users");
   };
 

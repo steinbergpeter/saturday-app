@@ -1,42 +1,38 @@
 import prisma from "@/lib/db";
-import { userWithPostsSchema } from "@/lib/validators";
+import { userWithPostsSchema, userSchema } from "@/lib/validators";
 import { NextRequest, NextResponse } from "next/server";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+type Props = {
+  req: NextRequest;
+  params: {
+    userId: string;
+  };
 };
 
-async function GET(req: NextRequest) {
+async function GET(_req: NextRequest, { params: { userId } }: Props) {
   try {
-    const userId = req.nextUrl.pathname.split("/").pop();
-    if (!userId) throw new Error("User ID is required");
     const rawData: unknown = await prisma.user.findUnique({
       where: { id: userId },
       include: { posts: true },
     });
     const user = userWithPostsSchema.parse(rawData);
-    return NextResponse.json(user, { status: 200, headers: corsHeaders });
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(error, { status: 400, headers: corsHeaders });
+    return NextResponse.json(error, { status: 400 });
   }
 }
 
-async function DELETE(req: NextRequest) {
+async function DELETE(_req: NextRequest, { params: { userId } }: Props) {
   try {
-    const userId = req.nextUrl.pathname.split("/").pop();
-    if (!userId) throw new Error("User ID is required");
-    console.log("/api/users/[userId]/route.ts/DELETE called id: ", userId);
-    const deletedUser = await prisma.user.delete({ where: { id: userId } });
-    return NextResponse.json(deletedUser, {
-      status: 200,
-      headers: corsHeaders,
+    const rawDeletedUser: unknown = await prisma.user.delete({
+      where: { id: userId },
     });
+    const deletedUser = userSchema.parse(rawDeletedUser);
+    return NextResponse.json(deletedUser, { status: 200 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(error, { status: 400, headers: corsHeaders });
+    return NextResponse.json(error, { status: 400 });
   }
 }
 
