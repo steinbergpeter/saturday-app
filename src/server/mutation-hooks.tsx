@@ -3,8 +3,8 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { createUser, deleteUser } from "./mutations";
-import type { NewUser, User } from "@/lib/validators";
+import { createPost, createUser, deleteUser } from "./mutations";
+import type { NewPost, NewUser, Post, User } from "@/lib/validators";
 
 const useCreateUser = (): UseMutationResult<User, Error, NewUser> => {
   const queryClient = useQueryClient();
@@ -12,6 +12,18 @@ const useCreateUser = (): UseMutationResult<User, Error, NewUser> => {
     mutationFn: async (newUser) => createUser(newUser),
     onError: (error) => console.error(error),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["users"] }),
+  });
+};
+
+const useCreatePost = (): UseMutationResult<Post, Error, NewPost> => {
+  const queryClient = useQueryClient();
+  return useMutation<Post, Error, NewPost>({
+    mutationFn: async (newPost) => createPost(newPost),
+    onError: (error) => console.error(error),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["user", data.authorId] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
   });
 };
 
@@ -30,4 +42,4 @@ const useDeleteUser = (id: string): UseMutationResult<User, Error, string> => {
   });
 };
 
-export { useCreateUser, useDeleteUser };
+export { useCreateUser, useDeleteUser, useCreatePost };

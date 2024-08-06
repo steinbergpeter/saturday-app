@@ -4,10 +4,13 @@ const postSchema = z.object({
   id: z.string(),
   title: z.string(),
   content: z.string(),
-  published: z.boolean(),
+  published: z.boolean().default(false),
   authorId: z.string(),
   createdAt: z.date(),
 });
+const newPostSchema = postSchema.omit({ id: true, createdAt: true });
+
+const postArraySchema = z.array(postSchema);
 
 const userSchema = z.object({
   id: z.string(),
@@ -30,6 +33,8 @@ type UserWithPosts = z.infer<typeof userWithPostsSchema>;
 type NewUser = z.infer<typeof newUserSchema>;
 type UserArray = z.infer<typeof userArraySchema>;
 type Post = z.infer<typeof postSchema>;
+type PostArray = z.infer<typeof postArraySchema>;
+type NewPost = z.infer<typeof newPostSchema>;
 
 export {
   userSchema,
@@ -37,9 +42,13 @@ export {
   newUserSchema,
   userArraySchema,
   postSchema,
+  postArraySchema,
+  newPostSchema,
   type User,
   type UserWithPosts,
   type NewUser,
   type UserArray,
   type Post,
+  type PostArray,
+  type NewPost,
 };

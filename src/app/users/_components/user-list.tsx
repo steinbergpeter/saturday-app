@@ -5,12 +5,16 @@ import { UserSlat } from "./user-slat";
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUsers();
+  console.log("🤡 users from UserList: ", users);
 
   if (isError || !users) {
     return <div>Error: {error?.message ?? "Cannot get users"}</div>;
   }
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+  if (users.length < 1) {
+    return <h3>No users</h3>;
   }
 
   return (

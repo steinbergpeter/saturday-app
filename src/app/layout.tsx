@@ -18,8 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header className="fixed bg-accent text-accent-foreground w-full flex justify-between items-center px-6 py-2 h-16">
+      <body className={`${inter.className} relative dark`}>
+        <header className="fixed top-0 bg-accent text-accent-foreground w-full flex justify-between items-center px-6 py-2 h-16">
           <NavBar />
         </header>
         <Providers>{children}</Providers>

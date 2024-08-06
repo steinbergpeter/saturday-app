@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useDeleteUser } from "@/server/mutation-hooks";
 import { useRouter } from "next/navigation";
 
@@ -16,12 +17,14 @@ const DeleteUserBtn = ({ userId }: Props) => {
   };
 
   return (
-    <button
+    <Button
       onClick={handleDelete}
-      className="bg-destructive text-destructive-foreground px-2 py-1 rounded"
+      variant="destructive"
+      size="default"
+      className="px-2 py-1 rounded"
     >
-      {isPending ? "Deleting..." : "Delete"}
-    </button>
+      {isPending ? "Deleting..." : "Delete User"}
+    </Button>
   );
 };
 

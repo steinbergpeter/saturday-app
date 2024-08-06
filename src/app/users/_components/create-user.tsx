@@ -2,6 +2,7 @@
 
 import { useCreateUser } from "@/server/mutation-hooks";
 import { useRef, type FormEvent } from "react";
+import { Button } from "@/components/ui/button";
 
 const CreateUser = () => {
   const { mutate: createUser, isError, isPending, error } = useCreateUser();
@@ -40,12 +41,12 @@ const CreateUser = () => {
         "
         />
       </div>
-      <button
+      <Button
         type="submit"
         className="bg-primary text-primary-foreground px-3 py-1 rounded w-full mt-2"
       >
         {isPending ? "Creating..." : "Create User"}
-      </button>
+      </Button>
     </form>
   );
 };

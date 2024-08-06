@@ -1,12 +1,22 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { getUsers, getUserWithPosts } from "./queries";
-import type { UserArray, UserWithPosts } from "@/lib/validators";
+import { getPosts, getUsers, getUserWithPosts } from "./queries";
+import type { PostArray, UserArray, UserWithPosts } from "@/lib/validators";
 
-const useGetUsers = (): UseQueryResult<UserArray, Error> =>
-  useQuery<UserArray, Error>({
+const useGetUsers = (): UseQueryResult<UserArray, Error> => {
+  console.log("♥︎ useGetUsers called");
+  return useQuery<UserArray, Error>({
     queryKey: ["users"],
     queryFn: () => getUsers(),
   });
+};
+
+const useGetPosts = (): UseQueryResult<PostArray, Error> => {
+  console.log("♥︎ useGetPosts called");
+  return useQuery<PostArray, Error>({
+    queryKey: ["posts"],
+    queryFn: () => getPosts(),
+  });
+};
 
 const useGetUserWithPosts = (
   id: string
@@ -16,4 +26,4 @@ const useGetUserWithPosts = (
     queryFn: () => getUserWithPosts(id),
   });
 
-export { useGetUsers, useGetUserWithPosts };
+export { useGetUsers, useGetUserWithPosts, useGetPosts };

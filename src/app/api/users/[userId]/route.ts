@@ -13,7 +13,7 @@ async function GET(_req: NextRequest, { params: { userId } }: Props) {
   try {
     const rawData: unknown = await prisma.user.findUnique({
       where: { id: userId },
-      include: { posts: true },
+      include: { posts: { orderBy: { createdAt: "desc" } } },
     });
     const user = userWithPostsSchema.parse(rawData);
     return NextResponse.json(user, { status: 200 });

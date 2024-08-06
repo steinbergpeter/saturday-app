@@ -3,9 +3,12 @@ import prisma from "@/lib/db";
 import { newUserSchema, userArraySchema } from "@/lib/validators";
 
 async function GET() {
+  console.log("🤡 get users api called");
   try {
     const rawData: unknown = await prisma.user.findMany();
     const users = userArraySchema.parse(rawData);
+    console.log("🤡 users from GET route: ", users);
+
     return NextResponse.json({ users }, { status: 200 });
   } catch (error) {
     console.error(error);

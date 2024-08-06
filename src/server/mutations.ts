@@ -1,7 +1,9 @@
-import { newUserSchema, userSchema } from "@/lib/validators";
+import { newPostSchema, newUserSchema, userSchema } from "@/lib/validators";
+import { ZodError } from "zod";
 
 const baseURL = "http://localhost:3000/api/";
 const usersURL = `${baseURL}users/`;
+const postsURL = `${baseURL}posts/`;
 
 async function deleteUser(id: string) {
   try {
@@ -37,4 +39,27 @@ async function createUser(data: unknown) {
   }
 }
 
-export { createUser, deleteUser };
+async function createPost(data: unknown) {
+  console.log("createPost mutation called; data: ", data);
+  try {
+    const validData = newPostSchema.parse(data);
+    const res = await fetch(postsURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(validData),
+    });
+    if (res.status !== 201) throw new Error(res.statusText);
+    const newPost = await res.json();
+    return newPost;
+  } catch (error) {
+    if (error instanceof ZodError) {
+      console.log("createPost ZodError: ", ZodError.toString());
+    } else {
+      console.error("createPost mutation error: ", error);
+    }
+  }
+}
+
+export { createUser, deleteUser, createPost };
